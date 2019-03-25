@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Pizza Market</title>
+    <link href="/public/css/stylesheet.css" rel="stylesheet" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <img class="logo" src="/public/images/pizza-market-logo.png" onclick="show('main')"/>
+        <button class="open-button">Open Market</button>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <div id="firstSection">
+          <div id="popularSlices">
+            <div class="title">Popular Slices</div>
+            <ul class="results">
+              {{#each popSlices}}
+                <li>
+                  <div class="ticker" onclick="show('{{ticker}}')">{{ticker}}</div>
+                  {{#if (isPositive diffLast)}}
+                    <div class="pos-change">{{percentFormat diffLast}}</div>
+                  {{else}}
+                    <div class="neg-change">{{percentFormat diffLast}}</div>
+                  {{/if}}
+                  <div class="quote">{{moneyFormat quote}}</div>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+          <canvas id="mainChart" style="display: inline-block; vertical-align: bottom;" height="175" width="700"></canvas>
+        </div>
+        <div id="secondSection">
+          <div class="title">Recent Updates</div>
+          <div id="summaries">
+            <div id="mostPopular" class="summary-spot">
+              <div class="title">Most Popular</div>
+              {{#mostPopular}}
+                <div class="ticker" onclick="show('{{ticker}}')">{{ticker}}</div>
+                <div class="quote">{{moneyFormat quote}}</div>
+              {{/mostPopular}}
+            </div>
+            <div id="newestSlice" class="summary-spot">
+              <div class="title">Newest Slice</div>
+              {{#newestSlice}}
+                <div class="ticker" onclick="show('{{ticker}}')">{{ticker}}</div>
+                <div class="quote">{{moneyFormat quote}}</div>
+              {{/newestSlice}}
+            </div>
+            <div id="mostImproved" class="summary-spot">
+              <div class="title">Most Improved</div>
+              {{#mostImproved}}
+                <div class="ticker" onclick="show('{{ticker}}')">{{ticker}}</div>
+                <div class="quote">{{moneyFormat quote}}</div>
+              {{/mostImproved}}
+            </div>
+          </div>
+          <div id="spotlight">
+            <div class="left">
+              <div class="title">Pepperoni</div>
+              <div class="image">
+                <img src="/public/images/pepp.png" />
+              </div>
+              <div class="quote">$120.34</div>
+            </div>
+            <div class="right">
+              <canvas id="spotlightChart" style="display: inline-block; vertical-align: bottom;" height="266" width="700"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+    <script>
+      var context = {{{jsonOutput this}}};
+      var pizzas = {{{jsonOutput this.pizzas}}};
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/public/js/application.js"></script>
+  </body>
+</html>

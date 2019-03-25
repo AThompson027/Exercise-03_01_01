@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+body {
+  font-family: 'Quicksand', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  margin: 0 auto;
+  max-width: 980px;
+}
+header {
+  background-color: #38C193;
+  color: white;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+header img.logo {
+  height: 38px;
+  cursor: pointer;
+}
+header .open-button {
+  float: right;
+  height: 39px;
+  font-size: 16px;
+  font-family: 'Quicksand', sans-serif;
+  margin-right: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #19345F;
+  color: white;
+  cursor: pointer;
+}
+
+header .open-button:hover,
+header .open-button:focus,
+header .open-button:active {
+  outline: none;
+  background-color: #2a4979;
+}
+
+header input.search {
+  font-family: 'Quicksand', sans-serif;
+  display: inline-block;
+  float: right;
+  margin: 0;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+#popularSlices {
+  display: inline-block;
+}
+
+#popularSlices .title {
+  font-size: 36px;
+}
+
+#popularSlices ul.results {
+  list-style-type: none;
+  padding: 0;
+}
+
+#popularSlices ul.results > li {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  font-size: 20px;
+}
+
+#popularSlices ul.results > li:nth-child(even) {
+  background-color: #E0E0E0;
+  padding: 5px 10px;
+}
+
+#popularSlices .ticker:hover,
+#summaries .ticker:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  opacity: .8;
+}
+
+.pos-change {
+  color: green;
+  font-size: 14px;
+}
+
+.pos-change:before {
+  content: '↑ ';
+}
+
+.neg-change {
+  color: red;
+  font-size: 14px;
+}
+
+.neg-change:before {
+  content: '↓ ';
+}
+
+#mainChart {
+  display: inline-block;
+}
+
+#secondSection > .title {
+  margin-bottom: 15px;
+  text-align: center;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 24px;
+  background-color: #38C193;
+  color: white;
+}
+
+#summaries {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.summary-spot .title,
+.summary-spot .quote {
+  font-size: 22px;
+}
+
+.summary-spot .ticker {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+#spotlight {
+  display: none;
+}
+
+#spotlight > .left {
+  display: inline-block;
+  text-align: center;
+}
+
+#spotlight > .left > .title {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+#spotlight > .left > .image > img {
+  height: 200px;
+}
+
+#spotlight > .left > .quote {
+  font-size: 28px;
+}
+
+#spotlight > .right {
+  float: right;
+  display: inline-block;
+  padding-top: 15px;
+}

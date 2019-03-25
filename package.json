@@ -1,0 +1,27 @@
+{
+  "name": "pizza-market",
+  "version": "1.0.0",
+  "description": "Pizza Stock Market",
+  "main": "src/server.js",
+  "dependencies": {
+    "chart.js": "2.3.0",
+    "handlebars": "4.0.6",
+    "hapi": "15.0.3",
+    "inert": "4.0.2",
+    "jquery": "3.1.1",
+    "lab": "11.0.1",
+    "lodash": "4.17.1",
+    "request": "^2.79.0",
+    "socket.io": "1.5.1",
+    "vision": "4.1.0",
+    "webpack": "2.1.0-beta.25"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node .",
+    "build": "./node_modules/.bin/webpack",
+    "dev": "./node_modules/.bin/nodemon --exec 'npm build && npm start'"
+  },
+  "author": "Ryan Lewis <ryan@ryanhlewis.com>",
+  "license": "ISC"
+}
