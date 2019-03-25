@@ -3,17 +3,28 @@ var fluxGen = require('../lib/fluxGen');
 function getRand () {
   return +(Math.random() * 100).toFixed(0);
 }
-
-function Pizza (startingDate, quotes, ticker, name, startingQuote, variability, positivity) {
-  var self = this;
+//two parameters required
+//... means that there are more parameters that are pizza properties
+function Pizza (startingDate, quotes, ...pizzaProps) {
+  //var self = this;
 
   this.startingDate = startingDate;
-  this.ticker = ticker;
-  this.name = name;
-  this.startingQuote = startingQuote;
-  this.variability = variability || getRand();
-  this.positivity = positivity || getRand();
+  this.ticker = pizzaProps[0];
+  this.name = pizzaProps[1];
+  this.startingQuote = pizzaProps[2];
+  this.variability = pizzaProps[3] || getRand();
+  this.positivity = pizzaProps[4] || getRand();
   this.quotes = quotes || [this.startingQuote];
+
+// private methods
+var addQuote = (quote) => {
+  this.quotes.push(quote);
+}
+
+var getQuote = (quoteIndex) => {
+  this.quotes[quoteIndex];
+}
+}
 
   this.getNext = function () {
     var newQuote = fluxGen(this.getLast(), 1, this.variability, this.positivity)[0];
@@ -36,16 +47,6 @@ function Pizza (startingDate, quotes, ticker, name, startingQuote, variability, 
 
     return quotesMap;
   };
-
-  // private methods
-  function addQuote (quote) {
-    self.quotes.push(quote);
-  }
-
-  function getQuote (quoteIndex) {
-    return self.quotes[quoteIndex];
-  }
-}
 
 Pizza.hydrate = function (pizzaObj) {
   var newPizza = new Pizza(

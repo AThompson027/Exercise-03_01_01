@@ -23,7 +23,8 @@ server.connection({ port: port });
 var io = require('socket.io')(server.listener);
 require('./events').register(io);
 
-server.register([require('inert'), require('vision')], function (err) {
+server.register([require('inert'), require('vision')],
+  (err) => {
   if (err) throw err;
 
   server.views({
@@ -36,7 +37,7 @@ server.register([require('inert'), require('vision')], function (err) {
   require('./lib/dataStore').init();
 
   server.route(require('./routes'));
-  server.start(function (err) {
+  server.start((err) => {
     if (err) throw err;
     console.log('Connected on ' + server.info.uri);
   });
