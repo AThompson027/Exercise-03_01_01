@@ -11,6 +11,8 @@ var server = new Hapi.Server({
   }
 });
 
+//This is the port that we are running on.
+//It will look for a port that is set in the environment (in this case it is not)
 var port = process.env.PORT || 8080;
 
 require('./lib/api').initPort(port);

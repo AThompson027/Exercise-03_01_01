@@ -1,3 +1,4 @@
+//takes code and processes it and jams it together to make it all run together
 const webpack = require('webpack');
 
 module.exports = {
