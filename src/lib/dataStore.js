@@ -38,16 +38,19 @@ function initPizzas (callback) {
     startingDate = new Date();
 
   pizzas.forEach(function (pizza) {
-    realPizzas[pizza[0]] = new Pizza(startingDate, data.quotes[pizza[0]], pizza[0], pizza[1], pizza[2], pizza[3], pizza[4]);
+    // realPizzas[pizza[0]] = new Pizza(startingDate, data.quotes[pizza[0]], pizza[0], pizza[1], pizza[2], pizza[3], pizza[4]);
+
+    realPizzas[pizza[0]] = new Pizza(startingDate, data.quotes[pizza[0]], ...pizza);
   });
 
   callback(realPizzas);
 }
 
+
 module.exports = {
-  init: init,
-  getQuotes: getQuotes,
-  getAllQuotes: getAllQuotes,
-  getPizzas: getPizzas,
-  getPizza: getPizza
+  init,
+  getQuotes,
+  getAllQuotes,
+  getPizzas,
+  getPizza
 };

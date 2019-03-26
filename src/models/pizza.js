@@ -5,40 +5,48 @@ function getRand () {
 }
 //two parameters required
 //... means that there are more parameters that are pizza properties
-function Pizza (startingDate, quotes, ...pizzaProps) {
+//The class is a replacement for "function"
+class Pizza {
   //var self = this;
 
+  //This is a spread parameter! 
+constructor(startingDate, quotes, ...pizzaProps) {
   this.startingDate = startingDate;
-  this.ticker = pizzaProps[0];
-  this.name = pizzaProps[1];
-  this.startingQuote = pizzaProps[2];
-  this.variability = pizzaProps[3] || getRand();
-  this.positivity = pizzaProps[4] || getRand();
+  [
+  this.ticker,
+  this.name,
+  this.startingQuote,
+  this.variability = getRand(),
+  this.positivity = getRand()
+  ] = pizzaProps;
+  
   this.quotes = quotes || [this.startingQuote];
+}
+
 
 // private methods
-var addQuote = (quote) => {
-  this.quotes.push(quote);
+_addQuote(quote) {
+  return this.quotes.push(quote);
 }
 
-var getQuote = (quoteIndex) => {
-  this.quotes[quoteIndex];
-}
+_getQuote(quoteIndex) {
+  return this.quotes[quoteIndex];
 }
 
-  this.getNext = function () {
+
+getNext() {
     var newQuote = fluxGen(this.getLast(), 1, this.variability, this.positivity)[0];
-    addQuote(newQuote);
+    this._addQuote(newQuote);
     return newQuote;
   };
 
-  this.getLast = function () {
-    return getQuote(this.quotes.length - 1);
+getLast() {
+    return this._getQuote(this.quotes.length - 1);
   };
 
-  this.getDatedQuotes = function () {
+getDatedQuotes() {
     var quotesMap = {},
-      curDate = startingDate;
+      {startingDate: curDate} = this;
 
     this.quotes.forEach(function (quote) {
       quotesMap[curDate] = quote;
@@ -47,7 +55,7 @@ var getQuote = (quoteIndex) => {
 
     return quotesMap;
   };
-
+}
 Pizza.hydrate = function (pizzaObj) {
   var newPizza = new Pizza(
     pizzaObj.startingDate,

@@ -1,7 +1,7 @@
 var api = require('./api');
 
 module.exports = {
-  updateQuotes: function (callback) {
+  updateQuotes (callback) {
     api.getAllPizzas(function (err, pizzas) {
       var newData = [],
         pizza;
