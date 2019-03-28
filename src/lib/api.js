@@ -15,11 +15,16 @@ function getAllQuotes (callback) {
   });
 }
 
-function getPizza (ticker, callback) {
-  request('http://localhost:' + localPort + '/pizza/' + ticker, function (error, res, body) {
-    if (callback) {
-      callback(error, Pizza.hydrate(JSON.parse(body)));
+function getPizza (ticker) {
+  return new Promise((resolve, reject) => {
+    request('http://localhost:' + localPort + '/pizza/' + ticker, function (error, res, body) {
+    if (error) {
+      reject(error)
     }
+    else {
+      resolve(Pizza.hydrate(JSON.parse(body)));
+    }
+      });
   });
 }
 

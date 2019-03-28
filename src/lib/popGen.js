@@ -1,13 +1,17 @@
 var api = require('./api'),
   _ = require('lodash');
 
-function getPopularSlices (callback) {
-  _getFinalQuotes(function (err, finalQuotes) {
-    var orderedQuotes = _.orderBy(finalQuotes, ['quote'], ['desc']);
 
-    if (callback) {
-      callback(null, _.take(orderedQuotes, 4));
-    }
+function getPopularSlices() {
+  return new Promise((resolve, reject) => {
+    _getFinalQuotes() 
+    .then((finalQuotes) => {
+      const orderedQuotes = 
+      //take an array are order it by quotes = _
+            _.orderBy(finalQuotes, ['quote'], ['desc']);
+        resolve(null, _.take(orderedQuotes, 4));
+    })
+    .catch(reject);
   });
 }
 
@@ -27,11 +31,19 @@ function getMostPopular (callback) {
 }
 
 function getNewestSlice (callback) {
-  api.getPizza('HAWA', function (err, pizza) {
+  api.getPizza('HAWA')
+  .then((pizza) => {
     if (callback) {
-      callback(null, { ticker: 'HAWA', quote: pizza.getLast() });
-    }
-  });
+      callback(null, { 
+        ticker: 'HAWA', 
+        quote: pizza.getLast() 
+        });
+      }
+    })
+    //this callback goes to the getNewSlice callback
+    .catch((err) => {
+      callback();
+    });
 }
 
 function getMostImproved (callback) {

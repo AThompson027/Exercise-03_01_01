@@ -1,6 +1,7 @@
 module.exports = (seed, times, variability, positivity) => {
-  const output = [],
+  const output = [];
    let current = seed,
+   change;
 
   for (var i = 0; i < times; i++) {
     let change = (Math.random() * variability).toFixed(0);
@@ -14,5 +15,3 @@ module.exports = (seed, times, variability, positivity) => {
   }
   return output;
 };
-
-//*************************** */

@@ -1,22 +1,30 @@
 var api = require('./api');
 
 module.exports = {
-  updateQuotes (callback) {
-    api.getAllPizzas(function (err, pizzas) {
-      var newData = [],
-        pizza;
-
-      for (var key in pizzas) {
-        pizza = pizzas[key];
-        newData.push({
-          ticker: pizza.ticker,
-          nextQuote: pizza.getNext()
-        });
-      }
-
-      console.log(newData);
-      console.log('updating quotes');
-      callback(null, newData);
+  updateQuotes () {
+    //Promises go back to the concept that a function should return something. 
+    //Instead of passing in a callback, you get back a Promise as a returned object
+    return new Promise((resolve, reject) => {
+      api.getAllPizzas(function (err, pizzas) {
+        var newData = [], pizza;
+        if (err){
+          reject(err);
+        }
+        else {
+           //data structure is pizzas in an array and will for loop that each time through will put a key in the variable
+        for (var key in pizzas) {
+          pizza = pizzas[key];
+          newData.push({
+            ticker: pizza.ticker,
+            nextQuote: pizza.getNext()
+          });
+        }
+  
+        //changes the console json display and stringified the information to organize the data to read easier
+        console.log(`${JSON.stringify(newData)} updating quotes`);
+        resolve(newData);
+        }
+      });
     });
   }
 };

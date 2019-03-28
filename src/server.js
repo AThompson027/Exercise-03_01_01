@@ -39,6 +39,6 @@ server.register([require('inert'), require('vision')],
   server.route(require('./routes'));
   server.start((err) => {
     if (err) throw err;
-    console.log('Connected on ' + server.info.uri);
+    console.log(`Connected on ${server.info.uri}`);
   });
 });

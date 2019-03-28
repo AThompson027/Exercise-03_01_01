@@ -1,7 +1,7 @@
 var dataStore = require('../lib/dataStore');
 
 module.exports = function (request, reply) {
-  var { ticker } = request.params.ticker;
+  var { ticker } = request.params;
 
   if (!ticker) {
     return reply('No ticker provided');
