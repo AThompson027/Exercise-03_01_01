@@ -16,39 +16,45 @@ function getPopularSlices() {
 }
 
 function getMostPopular (callback) {
-  _getFinalQuotes(function (err, finalQuotes) {
-    var mostPopular = finalQuotes.reduce(function (best, curr) {
-      if (curr.quote > best.quote) {
-        return curr;
-      }
-      return best;
-    }, { quote: 0 });
-
-    if (callback) {
-      callback(null, mostPopular);
-    }
-  });
-}
-
-function getNewestSlice (callback) {
-  api.getPizza('HAWA')
-  .then((pizza) => {
-    if (callback) {
-      callback(null, { 
-        ticker: 'HAWA', 
-        quote: pizza.getLast() 
-        });
-      }
+  return new Promise((resolve, reject) => {
+    _getFinalQuotes()
+    .then((finalQuotes) => {
+      const mostPopular = finalQuotes.reduce(function (best, curr) {
+        if (curr.quote > best.quote) {
+          return curr;
+        }
+        return best;
+      }, { 
+        quote: 0 
+      });
+        resolve(mostPopular);
     })
-    //this callback goes to the getNewSlice callback
-    .catch((err) => {
-      callback();
+    .catch(reject);
     });
 }
 
-function getMostImproved (callback) {
-  api.getAllQuotes(function (err, allQuotes) {
-    var diffQuotes = [],
+function getNewestSlice () {
+  return new Promise((resolve, reject) => {
+    api.getPizza('HAWA')
+  .then((pizza) => {
+      resolve({ 
+        ticker: 'HAWA', 
+        quote: pizza.getLast() 
+        });
+    })
+    //this callback goes to the getNewSlice callback
+    //this is the same thing as .catch(reject);
+    .catch((err) => {
+      reject(err);
+    });
+  });
+}
+
+function getMostImproved () {
+  return new Promise((resolve, reject) => {
+    api.getAllQuotes()
+    .then((allQuotes) => {
+      const diffQuotes = [],
       mostImproved;
     for (var key in allQuotes) {
       diffQuotes.push({
@@ -56,36 +62,38 @@ function getMostImproved (callback) {
         diff: allQuotes[key][allQuotes[key].length - 1] - allQuotes[key][0],
         quote: allQuotes[key][allQuotes[key].length - 1]
       });
-    }
+  }
 
-    mostImproved = diffQuotes.reduce(function (best, curr) {
-      if (curr.diff > best.diff) {
-        return curr;
-      }
-      return best;
-    }, { diff: 0});
-
-    if (callback) {
-      callback(null, mostImproved);
+  mostImproved = diffQuotes.reduce(function (best, curr) {
+    if (curr.diff > best.diff) {
+      return curr;
     }
+    return best;
+  }, { diff: 0});
+
+    resolve(mostImproved);
+   })
+   .catch(reject);
   });
 }
 
 function _getFinalQuotes (callback) {
-  var finalQuotes = [];
-  api.getAllQuotes(function (err, allQuotes) {
-    for (var key in allQuotes) {
-      finalQuotes.push({
-        ticker: key,
-        quote: allQuotes[key][allQuotes[key].length - 1],
-        diffLast: _percentOf(allQuotes[key][allQuotes[key].length - 2], allQuotes[key][allQuotes[key].length - 1])
-      });
-    }
-
-    if (callback) {
-      callback(null, finalQuotes);
-    }
-  });
+  return new Promise((resolve, reject) => {
+    const finalQuotes = [];
+    api.getAllQuotes()
+    .then((allQuote) => {
+      for (const key in allQuotes) {
+        finalQuotes.push({
+          ticker: key,
+          quote: allQuotes[key][allQuotes[key].length - 1],
+          diffLast: _percentOf(allQuotes[key][allQuotes[key].length - 2],
+          allQuotes[key][allQuotes[key].length - 1])
+          });
+        }
+        resolve(finalQuotes);
+      })
+      .catch(reject);
+    });
 }
 
 function _percentOf (val1, val2) {

@@ -19,10 +19,10 @@ Promise.all(promises)
 .then((results) => {
  const context = {
    popSlices: results[0],
-   mostPopular: results[0],
-   newestSlice: results[0],
-   mostImproved: results[0],
-   pizzas: results[0],
+   mostPopular: results[1],
+   newestSlice: results[2],
+   mostImproved: results[3],
+   pizzas: results[4]
  };
  return reply.view('index', context);
 })
@@ -31,25 +31,25 @@ Promise.all(promises)
   console.error(err);
 });
 
-  popGen.getPopularSlices(function (err, popSlices) {
-    context.popSlices = popSlices;
+  // popGen.getPopularSlices(function (err, popSlices) {
+  //   context.popSlices = popSlices;
 
-    popGen.getMostPopular(function (err, mostPopular) {
-      context.mostPopular = mostPopular;
+  //   popGen.getMostPopular(function (err, mostPopular) {
+  //     context.mostPopular = mostPopular;
 
-      popGen.getNewestSlice(function (err, newestSlice) {
-        context.newestSlice = newestSlice;
+  //     popGen.getNewestSlice(function (err, newestSlice) {
+  //       context.newestSlice = newestSlice;
 
-        popGen.getMostImproved(function (err, mostImproved) {
-          context.mostImproved = mostImproved;
+  //       popGen.getMostImproved(function (err, mostImproved) {
+  //         context.mostImproved = mostImproved;
 
-          dataStore.getPizzas(function (err, pizzas) {
-            context.pizzas = pizzas;
+  //         dataStore.getPizzas(function (err, pizzas) {
+  //           context.pizzas = pizzas;
 
-            return reply.view('index', context);
-          });
-        });
-      });
-    });
-  });
+  //           return reply.view('index', context);
+  //         });
+  //       });
+  //     });
+  //   });
+  // });
 };

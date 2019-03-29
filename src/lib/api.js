@@ -7,11 +7,17 @@ function initPort (port) {
   localPort = port;
 }
 
-function getAllQuotes (callback) {
-  request('http://localhost:' + localPort + '/quotes', function (error, res, body) {
-    if (callback) {
-      callback(error, JSON.parse(body));
-    }
+function getAllQuotes () {
+  return new Promise((resolve, reject) => {
+    //This is an async function that is routing
+    request('http://localhost:' + localPort + '/quotes', function (error, res, body) {
+      if (error) {
+        reject(error);
+      }
+      else {
+        resolve(JSON.parse(body));
+      }
+    });
   });
 }
 
@@ -19,7 +25,7 @@ function getPizza (ticker) {
   return new Promise((resolve, reject) => {
     request('http://localhost:' + localPort + '/pizza/' + ticker, function (error, res, body) {
     if (error) {
-      reject(error)
+      reject(error);
     }
     else {
       resolve(Pizza.hydrate(JSON.parse(body)));
@@ -28,17 +34,22 @@ function getPizza (ticker) {
   });
 }
 
-function getAllPizzas (callback) {
-  request('http://localhost:' + localPort + '/pizzas', function (error, res, body) {
-    if (callback) {
-      var staticPizzas = JSON.parse(body),
-        pizzas = [];
-
-      for (var ix in staticPizzas) {
-        pizzas.push(Pizza.hydrate(staticPizzas[ix]));
+function getAllPizzas () {
+  return new Promise((resolve, reject) => {
+    request('http://localhost:' + localPort + '/pizzas', 
+    function (error, res, body) {
+      if (error) {
+        reject(error);
       }
-      callback(error, pizzas);
-    }
+      else {
+        const staticPizzas = JSON.parse(body),
+        pizzas = [];
+        for (let ix in staticPizzas) {
+          pizzas.push(Pizza.hydrate(staticPizzas[ix]));
+        }
+        resolve(pizzas);
+      }
+    });
   });
 }
 

@@ -14,22 +14,22 @@ function getQuotes (ticker) {
   return data.quotes[ticker];
 }
 
-function getAllQuotes (callback) {
-  if (callback) {
-    callback(null, data.quotes);
-  }
+function getAllQuotes () {
+    return new Promise((resolve) => {
+      resolve(data.quotes);
+    });
 }
 
-function getPizzas (callback) {
-  if (callback) {
-    callback(null, data.pizzas);
-  }
+function getPizzas () {
+  return new Promise((resolve) => {
+      resolve(data.pizzas);
+  });
 }
 
-function getPizza (ticker, callback) {
-  if (callback) {
-    callback(null, data.pizzas[ticker]);
-  }
+function getPizza (ticker) {
+  return new Promise((resolve) => {
+    resolve(data.pizzas[ticker]);
+  });
 }
 
 function initPizzas (callback) {
